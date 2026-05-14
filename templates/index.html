@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Konwerter Systemów Liczbowych</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        body { background-color: #f4f4f4; min-height: 100vh; }
+        .main-card { margin-top: 50px; }
+    </style>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="box main-card">
+                    <h1 class="title has-text-centered has-text-primary">Kalkulator Systemowy</h1>
+                    <p class="subtitle has-text-centered">Konwersja: BIN | DEC | HEX</p>
+
+                    <form method="GET" action="/">
+                        <div class="field">
+                            <label class="label">Wpisz liczbę:</label>
+                            <div class="control">
+                                <input class="input is-primary" type="text" name="number" 
+                                       placeholder="np. 1010 lub FF" value="{{ input_val or '' }}">
+                            </div>
+                        </div>
+
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Z systemu:</label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth">
+                                            <select name="base_from">
+                                                <option value="2" {% if base_from == 2 %}selected{% endif %}>Binarny (2)</option>
+                                                <option value="10" {% if base_from == 10 or not base_from %}selected{% endif %}>Dziesiętny (10)</option>
+                                                <option value="16" {% if base_from == 16 %}selected{% endif %}>Szesnastkowy (16)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label class="label">Na system:</label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth">
+                                            <select name="base_to">
+                                                <option value="2" {% if base_to == 2 %}selected{% endif %}>Binarny (2)</option>
+                                                <option value="10" {% if base_to == 10 or not base_to %}selected{% endif %}>Dziesiętny (10)</option>
+                                                <option value="16" {% if base_to == 16 %}selected{% endif %}>Szesnastkowy (16)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="button is-primary is-fullwidth is-medium" type="submit">Przelicz</button>
+                    </form>
+
+                    {% if error %}
+                    <div class="notification is-danger is-light mt-4">
+                        <button class="delete"></button>
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    {% if result %}
+                    <div class="notification is-success mt-4">
+                        <h2 class="is-size-4">Wynik: <strong>{{ result }}</strong></h2>
+                    </div>
+                    
+                    <div class="message is-info is-small mt-4">
+                        <div class="message-body">
+                            <strong>Tip dydaktyczny:</strong> 
+                            Liczba w systemie {{ base_from }} została zamieniona na wartość dziesiętną, a następnie przeliczona na system {{ base_to }}.
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <p class="has-text-centered has-text-grey is-size-7">
+                    Narzędzie edukacyjne - metoda GET pozwala na dzielenie się linkiem z wynikiem.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
