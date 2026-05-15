@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import os
 
 app = Flask(__name__)
 
@@ -27,10 +28,6 @@ def index():
 
     return render_template('index.html', result=result, error=error, input_val=input_val, base_from=base_from, base_to=base_to)
 
-import os [cite: 5]
-
-if __name__ == '__main__':
-    # Pobiera port ze zmiennej środowiskowej lub używa 5000 jako domyślny lokalnie
-    port = int(os.environ.get("PORT", 5000)) [cite: 5]
-    # Wyłączenie debug=True na produkcji jest dobrą praktyką bezpieczeństwa
-    app.run(host='0.0.0.0', port=port) [cite: 5]
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
